@@ -1,6 +1,7 @@
 services:
 
   vote:
+    container_name: vote
     build:
       context: ./vote
       target: dev
@@ -16,6 +17,7 @@ services:
       - back-tier
 
   result:
+    container_name: result
     build: ./result
     # use nodemon rather than node for local dev
     entrypoint: nodemon --inspect=0.0.0.0 server.js
@@ -32,6 +34,7 @@ services:
       - back-tier
 
   worker:
+    container_name: worker
     build:
       context: ./worker
     depends_on:
@@ -42,12 +45,14 @@ services:
       - back-tier
 
   redis:
+    container_name: redis
     image: redis:alpine
     restart: always
     networks:
       - back-tier
 
   db:
+    container_name: postgres
     image: postgres:15-alpine
     restart: always
     environment:
